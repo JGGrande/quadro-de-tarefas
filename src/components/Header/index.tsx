@@ -1,10 +1,23 @@
 import { Container } from "./style"
 
-export const Header = () => {
+interface IHeaderProps{
+	openModal(): void
+}
+
+
+export const Header = ({ openModal }: IHeaderProps) => {
 	return(
 		<>
 			<Container>
-				<h1>teste</h1>
+				<h1>Quadro de tarefas</h1>
+				<div>
+					<button
+						type="button"
+						onClick={ openModal }
+					>
+						Nova tarefa
+					</button>
+				</div>
 			</Container>
 		</>
 	)
