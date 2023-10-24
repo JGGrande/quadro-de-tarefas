@@ -4,6 +4,7 @@ import { TodoList } from "./components/TodoList"
 import { StyleGlobal } from "./styles/styles"
 import { ModalCustom } from "./components/Modal";
 import { useState } from "react";
+import { TasksProvider } from "./context/taskContext";
 
 Modal.setAppElement('#root');
 
@@ -20,12 +21,14 @@ function App() {
 
   return (
     <>
-     <StyleGlobal />
-		 <Header openModal={handleOpenModal} />
-		 <TodoList />
+		<TasksProvider>
+				<StyleGlobal />
+				<Header openModal={handleOpenModal} />
+				<TodoList />
 
-		 <ModalCustom isOpen={modalIsVisible} closeModal={handleCloseModal} />
-    </>
+				<ModalCustom isOpen={modalIsVisible} closeModal={handleCloseModal} />
+			</TasksProvider>
+		</>
   )
 }
 

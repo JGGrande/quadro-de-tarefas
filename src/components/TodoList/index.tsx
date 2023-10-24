@@ -1,7 +1,10 @@
+import { TaskContext } from "../../context/taskContext";
 import { Container } from "./style"
-
+import { useContext } from "react"
 
 export const TodoList = () => {
+	const { tasks } = useContext(TaskContext);
+
 	return(
 		<>
 			<Container>
@@ -9,15 +12,24 @@ export const TodoList = () => {
 					<h3>
 						Quadro 1
 					</h3>
+					{
+						tasks.map((task) => {
 
-					<li>
-						<div>
-							<h4>
-								Lanche
-							</h4>
-							<p>x-bacon com muito bacon</p>
-						</div>
-					</li>
+							return(
+
+									<li>
+										<div>
+											<h4>
+												{task.title}
+											</h4>
+											<p>{task.description}</p>
+										</div>
+									</li>
+
+							)
+						})
+					}
+
 				</ul>
 			</Container>
 		</>

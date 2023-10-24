@@ -9,13 +9,13 @@ export const Header = ({ openModal }: IHeaderProps) => {
 	return(
 		<>
 			<Container>
-				<h1>Quadro de tarefas</h1>
+				<h1>Quadro de Tasks</h1>
 				<div>
 					<button
 						type="button"
 						onClick={ openModal }
 					>
-						Nova tarefa
+						Nova Task
 					</button>
 				</div>
 			</Container>

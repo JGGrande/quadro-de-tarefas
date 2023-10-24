@@ -1,5 +1,6 @@
 
 import Modal from "react-modal"
+import { FormEvent, useState } from "react"
 import { FormContainer } from "./styles"
 
 interface IModalCustomPops {
@@ -8,13 +9,25 @@ interface IModalCustomPops {
 }
 
 export const ModalCustom = ({ isOpen, closeModal }:IModalCustomPops) => {
+	const [titulo, setTitulo] = useState<string>('');
+	const [descricao, setDescricao] = useState<string>('');
+
+	function handleCreateTask(event: FormEvent){
+		event.preventDefault();
+
+
+
+
+		closeModal()
+	}
+
 
 	return (
 		<Modal
 			isOpen={isOpen}
 			overlayClassName="react-modal-overlay"
 			className="react-modal-content"
-
+			onRequestClose={closeModal}
 		>
 			<button
 				type="button"
@@ -24,16 +37,25 @@ export const ModalCustom = ({ isOpen, closeModal }:IModalCustomPops) => {
 				X
 			</button>
 
-			<FormContainer>
+			<FormContainer
+				onSubmit={handleCreateTask}
+			>
 				<h2>
-					Cadastrar tarefa
+					Cadastrar Task
 				</h2>
 				<input
 					type="text"
 					placeholder="Titulo"
 					name="titulo"
+					value={titulo}
+					onChange={event => setTitulo(event.target.value)}
 				/>
-				<textarea name="descricao" placeholder="Descrição"></textarea>
+				<textarea
+					name="descricao"
+					placeholder="Descrição"
+					value={descricao}
+					onChange={({ target })=> setDescricao(target.value)}
+				></textarea>
 
 				<button type="submit">Cadastrar</button>
 
