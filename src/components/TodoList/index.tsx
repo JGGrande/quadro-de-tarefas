@@ -13,11 +13,13 @@ export const TodoList = () => {
 						Quadro 1
 					</h3>
 					{
-						tasks.map((task) => {
+						tasks.map((task, index) => {
 
 							return(
 
-									<li>
+									<li
+										key={index}
+									>
 										<div>
 											<h4>
 												{task.title}

@@ -8,6 +8,7 @@ interface ITask{
 
 interface ITaskContexProps {
 	tasks: Array<ITask>
+	createTask(task: ITask): Promise<ITask>
 }
 
 export const TaskContext = createContext({} as ITaskContexProps);
@@ -17,24 +18,28 @@ interface ITaskProviderProps {
 }
 
 
-
 export function TasksProvider({ children }:ITaskProviderProps) {
 
 	const [tasks, setTasks] = useState<ITask[]>([]);
 
-	async function handleGetTaks(){
+	async function handleGetTasks(){
 		const tasksData = await axios.get('/api/tasks');
-		console.log(tasksData)
 		const tasks:ITask[] = tasksData.data.tasks
 		setTasks(tasks)
 	}
 
+	async function handleCreateTask(data: ITask): Promise<ITask> {
+		const apiResponse =  await axios.post('/api/tasks', data);
+		handleGetTasks()
+		return apiResponse.data.tasks
+	}
+
 	useEffect(()=>{
-		handleGetTaks()
+		handleGetTasks()
 	},[])
 
 	return(
-		<TaskContext.Provider value={{ tasks }} >
+		<TaskContext.Provider value={{ tasks, createTask: handleCreateTask }} >
 			{ children }
 		</TaskContext.Provider>
 	);

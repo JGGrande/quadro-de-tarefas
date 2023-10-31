@@ -10,6 +10,9 @@ createServer({
 	routes() {
 		this.get('/api/tasks', ()=> {
 			return this.schema.all("tasks")
+		}),
+		this.post('/api/tasks', (schema, request) =>{
+			return schema.db.tasks.insert(JSON.parse(request.requestBody))
 		})
 	},
 })

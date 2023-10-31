@@ -1,7 +1,9 @@
 
 import Modal from "react-modal"
-import { FormEvent, useState } from "react"
+import { FormEvent, useContext, useState } from "react"
 import { FormContainer } from "./styles"
+import { TaskContext } from "../../context/taskContext";
+
 
 interface IModalCustomPops {
 	isOpen: boolean;
@@ -9,14 +11,20 @@ interface IModalCustomPops {
 }
 
 export const ModalCustom = ({ isOpen, closeModal }:IModalCustomPops) => {
-	const [titulo, setTitulo] = useState<string>('');
-	const [descricao, setDescricao] = useState<string>('');
+	const { createTask } = useContext(TaskContext)
 
-	function handleCreateTask(event: FormEvent){
+	const [title, setTitle] = useState<string>('');
+	const [description, setDescription] = useState<string>('');
+
+	async function handleCreateTask(event: FormEvent<HTMLFormElement>){
 		event.preventDefault();
 
-
-
+		await createTask({
+			title,
+			description
+		})
+		setTitle("")
+		setDescription("")
 
 		closeModal()
 	}
@@ -47,14 +55,16 @@ export const ModalCustom = ({ isOpen, closeModal }:IModalCustomPops) => {
 					type="text"
 					placeholder="Titulo"
 					name="titulo"
-					value={titulo}
-					onChange={event => setTitulo(event.target.value)}
+					required
+					value={title}
+					onChange={event => setTitle(event.target.value)}
 				/>
 				<textarea
 					name="descricao"
 					placeholder="Descrição"
-					value={descricao}
-					onChange={({ target })=> setDescricao(target.value)}
+					required
+					value={description}
+					onChange={({ target })=> setDescription(target.value)}
 				></textarea>
 
 				<button type="submit">Cadastrar</button>
